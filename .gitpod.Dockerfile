@@ -1,3 +1,4 @@
+RUN brew tap dart-lang/dart && brew install dart
 FROM gitpod/workspace-full-vnc:latest
 SHELL ["/bin/bash", "-c"]
 ENV ANDROID_HOME=$HOME/androidsdk \
