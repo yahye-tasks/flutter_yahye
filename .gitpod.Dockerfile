@@ -23,6 +23,8 @@ RUN install-packages openjdk-8-jdk -y \
 
 # Insall flutter and dependencies
 USER gitpod
+RUN sudo apt-get remove  darts -y && sudo apt-get remove --auto-remove darts -y && sudo apt-get purge darts -y && sudo apt-get purge --auto-remove darts -y && sudo apt autoremove -y
+
 RUN wget -q "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}.tar.xz" -O - \
     | tar xpJ -C "$HOME" \
     && _file_name="commandlinetools-linux-8092744_latest.zip" && wget "https://dl.google.com/android/repository/$_file_name" \
@@ -34,12 +36,12 @@ RUN wget -q "https://storage.googleapis.com/flutter_infra_release/releases/stabl
     && flutter precache && for _plat in web linux-desktop; do flutter config --enable-${_plat}; done \
     && flutter config --android-sdk $ANDROID_HOME \
     && yes | flutter doctor --android-licenses \
-    && sudo apt update  \
-    && sudo apt upgrade -y && sudo apt install apt-transport-https  \
+    && sudo apt update  -y \
+    && sudo apt upgrade -y && sudo apt install apt-transport-https \
     && sudo sh -c 'wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -' \
     && sudo sh -c 'wget -qO- https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list' \
-    && sudo apt update \
-    && sudo apt install dart \
+    && sudo apt update -y \
+    && sudo apt install dart -y \
     && export PATH="$PATH:/usr/lib/dart/bin" \
     && echo 'export PATH="$PATH:/usr/lib/dart/bin"' >> ~/.profile \
     && flutter doctor
